@@ -13,10 +13,6 @@ HDE::Socket::Socket(int domain, int service, int type,int port,u_long interface)
 	server_fd= socket(domain,service,type);
 	//Testing Socket
 	Error(server_fd);
-	//Creating Connection
-	connection= ConnectToSocket(server_fd,address);
-	//testing Connection
-	Error(connection);
 }
 
 void HDE::Socket::Error(int item) {
@@ -34,6 +30,15 @@ int HDE::Socket::getServer() {
 
 int HDE::Socket::getConnection() {
 	return connection;
+}
+
+struct sockaddr_in HDE::Socket::getAddress() {
+	return address;
+}
+
+//setter function
+void HDE::Socket::setConnection(int connection) {
+	this->connection=connection;
 }
 
 

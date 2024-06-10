@@ -9,9 +9,10 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include <netinet/in.h>
+#include <sys/types.h>
 
 namespace HDE{
-	class Socket{
+	class Socket {
 	private:
 		int 					server_fd;
 		struct sockaddr_in		address;
@@ -21,10 +22,12 @@ namespace HDE{
 		Socket(int domain,int service, int type,int port,u_long interface);
 		void		Error(int);
 		//Establishing Connection With Socket
-		int			ConnectToSocket(int server,struct sockaddr_in address);
+		virtual int			ConnectToSocket(int server,struct sockaddr_in address)=0;
 		//Getter Functions
-		int			getServer();
-		int			getConnection();
+		int					getServer();
+		int					getConnection();
+		void				setConnection(int connection);
+		struct sockaddr_in	getAddress();
 	};
 }
 
