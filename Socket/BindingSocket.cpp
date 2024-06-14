@@ -15,7 +15,7 @@ HDE::BindingSocket::BindingSocket(int domain, int service, int type, int port, u
 
 int HDE::BindingSocket::ConnectToSocket(int server, struct sockaddr_in address) {
 
-	return bind(server,(struct sockaddr_in*)&address,sizeof(address));
+	return bind(getServer(),(struct sockaddr *)&address,sizeof(address));
 }
 
 

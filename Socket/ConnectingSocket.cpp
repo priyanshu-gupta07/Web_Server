@@ -16,6 +16,6 @@ HDE::ConnectingSocket::ConnectingSocket(int domain, int service, int type, int p
 
 int HDE::ConnectingSocket::ConnectToSocket(int server, struct sockaddr_in address) {
 
-	return connect(server,(struct sockaddr_in*)&address,sizeof(address));
+	return connect(getServer(),(const struct sockaddr *)&address,sizeof(address));
 }
 

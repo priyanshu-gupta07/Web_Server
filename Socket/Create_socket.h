@@ -14,9 +14,9 @@
 namespace HDE{
 	class Socket {
 	private:
-		int 					server_fd;
-		struct sockaddr_in		address;
-		int						connection;
+		int 							server_fd;
+		struct sockaddr_in				address;
+		int								connection;
 	public:
 		//constructor for creating a Socket
 		Socket(int domain,int service, int type,int port,u_long interface);
