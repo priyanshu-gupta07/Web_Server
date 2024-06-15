@@ -10,6 +10,8 @@ namespace HDE {
             void AcceptConnection();
             void handleConnection();
             void respondConnection();
+            char* parse(char str[],const char symbol[]);
+            char* parse_method(char str[],const char symbol[]);
             void launch();
     };
 }
