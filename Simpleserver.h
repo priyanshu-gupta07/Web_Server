@@ -2,9 +2,8 @@
 // Created by priyanshu on 11/6/24.
 //
 
-#include "Socket/systemdependies.hpp"
-#include "iostream"
-using namespace std;
+#include "Socket/systemdependies.h"
+#include<iostream>
 
 namespace HDE {
 	class SimpleServer {

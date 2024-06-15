@@ -1,9 +1,8 @@
 #include"TestServer.h"
 
-HDE::TestServer::TestServer():SimpleServer(AF_INET,SOCK_STREAM,0,8080,INADDR_ANY,0) {
+HDE::TestServer::TestServer() : SimpleServer(AF_INET,SOCK_STREAM,0,8080,INADDR_ANY,10) {
     launch();
 }
-
 void HDE::TestServer::AcceptConnection() {
     struct sockaddr_in address=getSocket()->getAddress();
     int addrlen=sizeof(address);
@@ -12,7 +11,7 @@ void HDE::TestServer::AcceptConnection() {
 }
 
 void HDE::TestServer::handleConnection() {
-    std::cout<<buffer<<endl;
+    std::cout<<buffer<<std::endl;
 }
 
 void HDE::TestServer::respondConnection() {
