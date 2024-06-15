@@ -1,2 +1,2 @@
 # Web_Server
-A Http server in C++ implemeanted without libraries
+A Http server in C++ implemented without libraries
