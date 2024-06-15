@@ -2,7 +2,7 @@
 
 This guide provides instructions for compiling the socket server program using the following command:
 
-g++ Socket/BindingSocket.cpp Socket/ListeningSocket.cpp Socket/Create_socket.cpp Server/TestServer.cpp Server/Simpleserver.cpp Server/test.cpp -o test.exe
+`g++ Socket/BindingSocket.cpp Socket/ListeningSocket.cpp Socket/Create_socket.cpp Server/TestServer.cpp Server/Simpleserver.cpp Server/test.cpp -o test.exe`
 
 ## Prerequisites
 
@@ -20,7 +20,7 @@ Follow these steps to compile the socket server program:
 
 3. Run the following command:
 
-g++ Socket/BindingSocket.cpp Socket/ListeningSocket.cpp Socket/Create_socket.cpp Server/TestServer.cpp Server/Simpleserver.cpp Server/test.cpp -o test.exe
+`g++ Socket/BindingSocket.cpp Socket/ListeningSocket.cpp Socket/Create_socket.cpp Server/TestServer.cpp Server/Simpleserver.cpp Server/test.cpp -o test.exe`
 
 This command compiles the specified C++ source files (`BindingSocket.cpp`, `ListeningSocket.cpp`, `Create_socket.cpp`, `TestServer.cpp`, `Simpleserver.cpp`, and `test.cpp`) and links them into a single executable named `test.exe`.
 
@@ -30,7 +30,7 @@ This command compiles the specified C++ source files (`BindingSocket.cpp`, `List
 
 After successful compilation, you can run the `test.exe` executable by entering the following command in the terminal or command prompt:
 
-./test.exe
+`./test.exe`
 
 This will start the socket server program, and it will begin listening for incoming client connections on the specified port (configured within the source code).
 
