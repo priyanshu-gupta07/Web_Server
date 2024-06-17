@@ -56,7 +56,7 @@ void HDE::TestServer::handleConnection() {
                     //case that the parse_string = "/"  --> Send index.html file
                     //write(new_socket , httpHeader , strlen(httpHeader));
                     char path_head[500] = ".";
-                    strcat(path_head, "/index.html");
+                    strcat(path_head, "/Server/HTML/index.html");
                     strcat(copy_head, "Content-Type: text/html\r\n\r\n");
                     send_message(newsocket, path_head, copy_head);
                 }
@@ -156,21 +156,9 @@ int HDE::TestServer::send_message(int fd, char image_path[], char head[]){
         ssize_t sent_size;
 
         while(img_total_size > 0){
-            //if(img_total_size < block_size){
-             //   sent_size = sendfile(fd, fdimg, NULL, img_total_size);
-            //}
-            //else{
-            //    sent_size = sendfile(fd, fdimg, NULL, block_size);
-            //}          
-            //img_total_size = img_total_size - sent_size;
-        
-            //if(sent_size < 0){
-             //   printf("send file error --> file: %d, send size: %d , error: %s\n", fdimg, sent_size, strerror(errno));
-             //   img_total_size = -1;
               int send_bytes = ((img_total_size < block_size) ? img_total_size : block_size);
               int done_bytes = sendfile(fd, fdimg, NULL, block_size);
               img_total_size = img_total_size - done_bytes;
-            //}
         }
         if(sent_size >= 0){
             printf("send file: %s \n" , image_path);
