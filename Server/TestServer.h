@@ -12,6 +12,7 @@ namespace HDE {
             void respondConnection();
             char* parse(char str[],const char symbol[]);
             char* parse_method(char str[],const char symbol[]);
+            int send_message(int fd, char mssg[],char tot[]);
             void launch();
     };
 }
