@@ -1,10 +1,127 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My Simple Page</title>
-  </head>
-  <body>
-    <h1>Welcome to My Simple Page</h1>
-    <p>This is a basic HTML page with a heading and a paragraph.</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My CV</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+header {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+h3 {
+    color: #333;
+}
+
+.experience-item {
+    margin-bottom: 20px;
+}
+
+.experience-item h4 {
+    margin-bottom: 5px;
+}
+
+.experience-item h5 {
+    margin-top: 0;
+    color: #666;
+}
+
+.experience-item ul {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>John Doe</h1>
+        <h2>Software Engineer</h2>
+    </header>
+    
+    <main>
+        <section>
+            <h3>About Me</h3>
+            <p>Experienced software engineer with a passion for building high-quality, scalable applications. Skilled in multiple programming languages and frameworks, with a strong focus on clean code and best practices.</p>
+        </section>
+        
+        <section>
+            <h3>Experience</h3>
+            <div class="experience-item">
+                <h4>Lead Software Engineer</h4>
+                <h5>Acme Inc.</h5>
+                <p>2018 - Present</p>
+                <ul>
+                    <li>Led a team of developers in building a cloud-based SaaS platform.</li>
+                    <li>Implemented CI/CD pipelines and automated testing processes.</li>
+                    <li>Mentored junior developers and conducted code reviews.</li>
+                </ul>
+            </div>
+            
+            <div class="experience-item">
+                <h4>Software Engineer</h4>
+                <h5>Tech Startup</h5>
+                <p>2015 - 2018</p>
+                <ul>
+                    <li>Developed and maintained a mobile application using React Native.</li>
+                    <li>Collaborated with cross-functional teams to deliver features on time.</li>
+                    <li>Optimized application performance and implemented caching strategies.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section>
+            <h3>Education</h3>
+            <div class="education-item">
+                <h4>Bachelor's Degree in Computer Science</h4>
+                <h5>University of XYZ</h5>
+                <p>2011 - 2015</p>
+            </div>
+        </section>
+        
+        <section>
+            <h3>Skills</h3>
+            <ul>
+                <li>JavaScript</li>
+                <li>React</li>
+                <li>Node.js</li>
+                <li>Python</li>
+                <li>AWS</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 John Doe</p>
+    </footer>
+</body>
 </html>
