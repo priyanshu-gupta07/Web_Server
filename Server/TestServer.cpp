@@ -19,8 +19,15 @@ void HDE::TestServer::AcceptConnection() {
 }
 
 void HDE::TestServer::handleConnection() {
-    read(newsocket,buffer,300000);
-    std::cout<<buffer<<std::endl;
+        pid_t pid= fork();
+        if(pid < 0){
+            perror("Error on fork");
+            exit(EXIT_FAILURE);
+        }
+        
+        if(pid == 0){
+            int valread=read(newsocket,buffer,300000);
+            std::cout<<buffer<<std::endl;
 
             printf("\n buffer message: %s \n ", buffer);
             char *parse_string_method = parse_method(buffer, " ");  //Try to get the path which the client ask for
@@ -60,14 +67,109 @@ void HDE::TestServer::handleConnection() {
                     strcat(copy_head, "Content-Type: text/html\r\n\r\n");
                     send_message(newsocket, path_head, copy_head);
                 }
+                else if ((parse_ext[0] == 'j' && parse_ext[1] == 'p' && parse_ext[2] == 'g') || (parse_ext[0] == 'J' && parse_ext[1] == 'P' && parse_ext[2] == 'G'))
+                {
+                    //send image to client
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: image/jpeg\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else if (parse_ext[0] == 'i' && parse_ext[1] == 'c' && parse_ext[2] == 'o')
+                {
+                    //https://www.cisco.com/c/en/us/support/docs/security/web-security-appliance/117995-qna-wsa-00.html
+                    char path_head[500] = ".";
+                    strcat(path_head, "/img/favicon.png");
+                    strcat(copy_head, "Content-Type: image/vnd.microsoft.icon\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else if (parse_ext[0] == 't' && parse_ext[1] == 't' && parse_ext[2] == 'f')
+                {
+                    //font type, to display icon from FontAwesome
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: font/ttf\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else if (parse_ext[strlen(parse_ext)-2] == 'j' && parse_ext[strlen(parse_ext)-1] == 's')
+                {
+                    //javascript
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: text/javascript\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else if (parse_ext[strlen(parse_ext)-3] == 'c' && parse_ext[strlen(parse_ext)-2] == 's' && parse_ext[strlen(parse_ext)-1] == 's')
+                {
+                    //css
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: text/css\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else if (parse_ext[0] == 'w' && parse_ext[1] == 'o' && parse_ext[2] == 'f')
+                {
+                    //Web Open Font Format woff and woff2
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: font/woff\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else if (parse_ext[0] == 'm' && parse_ext[1] == '3' && parse_ext[2] == 'u' && parse_ext[3] == '8')
+                {
+                    //Web Open m3u8
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: application/vnd.apple.mpegurl\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else if (parse_ext[0] == 't' && parse_ext[1] == 's')
+                {
+                    //Web Open ts
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: video/mp2t\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                }
+                else{
+                    //send other file 
+                    char path_head[500] = ".";
+                    strcat(path_head, parse_string);
+                    strcat(copy_head, "Content-Type: text/plain\r\n\r\n");
+                    send_message(newsocket, path_head, copy_head);
+                    printf("Else: %s \n", parse_string);        
+                }
+                printf("\n------------------Server sent----------------------------------------------------\n");
+                respondConnection();
+                return;
+                
             }
-
+            else if (parse_string_method[0] == 'P' && parse_string_method[1] == 'O' && parse_string_method[2] == 'S' && parse_string_method[3] == 'T'){
+                char *find_string = (char*)malloc(200);
+                find_string = find_token(buffer, "\r\n", "action");
+                strcat(copy_head, "Content-Type: text/plain \r\n\r\n"); //\r\n\r\n
+                //strcat(copy_head, "Content-Length: 12 \n");
+                strcat(copy_head, "User Action: ");
+                printf("find string: %s \n", find_string);
+                strcat(copy_head, find_string);
+                write(newsocket, copy_head, strlen(copy_head));
+            }
+            free(copy);
+            free(copy_head);
+            respondConnection();
+            return;
+            }  
+            else{
+            printf(">>>>>>>>>>Parent create child with pid: %d <<<<<<<<<", pid);
+            respondConnection();
+            }
+    close(getSocket()->getServer());
+    return ;
 }
 
 void HDE::TestServer::respondConnection() {
-    // char* hello="Hello from server";
-    // send(newsocket,hello,strlen(hello),0);
     close(newsocket);
+    return;
 }
 
 void HDE::TestServer::launch() {
@@ -165,4 +267,44 @@ int HDE::TestServer::send_message(int fd, char image_path[], char head[]){
         }
         close(fdimg);
     }
+
+    return 0;
 }
+
+char* HDE::TestServer::find_token(char line[], const char symbol[], const char match[])
+{
+    char *copy = (char *)malloc(strlen(line) + 1);
+    strcpy(copy, line);
+        
+    char *message;
+    char * token = strtok(copy, symbol);
+
+    while( token != NULL ) {
+      
+      //printf("--Token: %s \n", token);
+      
+      if(strlen(match) <= strlen(token))
+      {
+          int match_char = 0;
+          for(int i = 0; i < strlen(match); i++)
+          {
+              if(token[i] == match[i])
+              {
+                  match_char++;
+              }
+          }
+          if(match_char == strlen(match)){
+            message = token;
+            return message;
+          }
+      }      
+      token = strtok(NULL, symbol);
+   }
+   free(copy);
+   free(token);
+   message = "";
+   return message;
+}
+
+
+
