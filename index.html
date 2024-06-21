@@ -2,126 +2,262 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My CV</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>page layout</title>
     <style>
-      body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
+        body{
+    margin:0;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}
+.header{
+    display: flex;
+    flex-direction:column ;
+    background-color: #1F2937;
+}
+.top{
+    position:sticky;
+    z-index:3;
+    top: 0%;
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    padding: 0 10px;
+
+}
+.logo{
+    padding-top: 10px;
+    padding-left :200px ;
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
 }
 
-header {
+ul{
+    display: flex;
+    flex-direction: row;
+    margin-top: none;
+    gap: 20px;
+    list-style-type: none;
+    padding-right: 100px;
+}
+
+.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+    width: 300px;
+    color: white;
+    gap: 20px;
+}
+.bottom{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
+    padding: 60px 0;
+    gap: 20px;
+}
+.mainimage{
+    height: 200px;
+    max-width: 400px;
+    min-width: 200px;
+    background-color: rgb(207, 201, 201);
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px(0,0,0,.9);
+}
+.heading{
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+
+    
+}
+.signup,button{
+    width: 80px;
+    padding:5px;
+    border-radius: 8px;
+    color: white;
+    background-color: rgb(38, 78, 206);
+    font-size: 15px;
+    font-weight: 700;
+}
+.pictures{
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+.imagebox{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+}
+.both{
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: auto;
+
+}
+
+.image{
+    display: flex;
+    flex-direction: row;
+    width: 150px;
+    height: 170px;
+    border-radius: 20px;
+    border: 4px solid rgb(9, 62, 206);
+    
+}
+.info{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+}
+.imagetext{
     text-align: center;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
 }
 
-main {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.quote{
+    background-color: rgb(235, 230, 230);
+    padding:100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin-top: 100px;
+    
+
+}
+.author{
+    display: flex;
+    width:500px;
+    justify-content: end;
 }
 
-section {
-    margin-bottom: 30px;
+.sign_box{
+    display: flex;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
 }
 
-h3 {
-    color: #333;
+.content{
+    display: flex;
+    height: 200px;
+    width: 900px ;
+    background-color:blue;
 }
 
-.experience-item {
-    margin-bottom: 20px;
+.left2{
+    display: flex;
+    flex:8;
+    color:white;
+    font-weight: bold;
+    font-size: 17px;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
 }
+.right2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex:2;
 
-.experience-item h4 {
-    margin-bottom: 5px;
+
 }
-
-.experience-item h5 {
-    margin-top: 0;
-    color: #666;
-}
-
-.experience-item ul {
-    margin-top: 5px;
-    padding-left: 20px;
-}
-
-footer {
-    text-align: center;
-    background-color: #333;
-    color: #fff;
+.buttonsign{
     padding: 10px;
+    border: 2px solid white;
+}
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 50px;
+    background-color: #1F2937;
+    position: sticky;
+    bottom: 0%;
+    z-index: 3;
+
 }
     </style>
 </head>
 <body>
-    <header>
-        <h1>John Doe</h1>
-        <h2>Software Engineer</h2>
-    </header>
+    <div class="container">
+        <div class="header">
+            <div class="top"> 
+                <div class="logo"> Header Logo</div>
+                <div class="link">
+                    <ul>
+                        <li><a href="#"></a>header link 1</li>
+                        <li><a href="#"></a>header link 2</li>
+                        <li><a href="#"></a>header link 3</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bottom">
+                <div class="text"> <div class="heading">this website is awesome <br></div>
+                This Website has some subtext that goes here under the main title 
+            . it is a smaller font and color in lower contrast <br><button class=".signup"> sign up</button></div>
+                <div class="mainimage"> An image goes here</div>
+            </div>
+        </div>
+
+        <div class="pictures">
+            <div class="info">Some random  information</div>
+           <div class="imagebox"> <div class="both"> 
+            <div class="image"></div>
+        <div class="imagetext">this is some subtext under an illustration or image</div></div>
+        <div class="both"> 
+            <div class="image"></div>
+        <div class="imagetext">this is some subtext under an illustration or image</div></div>
+        <div class="both"> 
+            <div class="image"></div>
+        <div class="imagetext">this is some subtext under an illustration or image</div></div>
+        <div class="both"> 
+            <div class="image"></div>
+        <div class="imagetext">this is some subtext under an illustration or image</div></div>
+        
+    </div>
+        </div>
+        <div class="quote">
+            <div class="mainquote">
+                Love is the twisted curse of all
+            </div> <br>
+            <div class="author"> -Gojo satauro</div>
+        </div>
+        <div class="sign_box">
+            <div class="content">
+                <div class="left2"><pre>
+                    <h3>Call to action! It's time!</h3>sign up for our product by clicking the button right over there
+                </pre></div>
+                <div class="right2">
+                    <button class="buttonsign" >sign up</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer"> Copyright @ Odin project 2021</div>
+    </div>
+
     
-    <main>
-        <section>
-            <h3>About Me</h3>
-            <p>Experienced software engineer with a passion for building high-quality, scalable applications. Skilled in multiple programming languages and frameworks, with a strong focus on clean code and best practices.</p>
-        </section>
-        
-        <section>
-            <h3>Experience</h3>
-            <div class="experience-item">
-                <h4>Lead Software Engineer</h4>
-                <h5>Acme Inc.</h5>
-                <p>2018 - Present</p>
-                <ul>
-                    <li>Led a team of developers in building a cloud-based SaaS platform.</li>
-                    <li>Implemented CI/CD pipelines and automated testing processes.</li>
-                    <li>Mentored junior developers and conducted code reviews.</li>
-                </ul>
-            </div>
-            
-            <div class="experience-item">
-                <h4>Software Engineer</h4>
-                <h5>Tech Startup</h5>
-                <p>2015 - 2018</p>
-                <ul>
-                    <li>Developed and maintained a mobile application using React Native.</li>
-                    <li>Collaborated with cross-functional teams to deliver features on time.</li>
-                    <li>Optimized application performance and implemented caching strategies.</li>
-                </ul>
-            </div>
-        </section>
-        
-        <section>
-            <h3>Education</h3>
-            <div class="education-item">
-                <h4>Bachelor's Degree in Computer Science</h4>
-                <h5>University of XYZ</h5>
-                <p>2011 - 2015</p>
-            </div>
-        </section>
-        
-        <section>
-            <h3>Skills</h3>
-            <ul>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Node.js</li>
-                <li>Python</li>
-                <li>AWS</li>
-            </ul>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2023 John Doe</p>
-    </footer>
 </body>
 </html>
