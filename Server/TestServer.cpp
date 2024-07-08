@@ -19,55 +19,55 @@ void HDE::TestServer::AcceptConnection() {
 }
 
 void HDE::TestServer::handleConnection() {
-        pid_t pid= fork();
-        if(pid < 0){
-            perror("Error on fork");
+    pid_t pid = fork();
+    if (pid < 0) {
+        perror("Error on fork");
+        exit(EXIT_FAILURE);
+    }
+    
+    if (pid == 0) {
+        // Child process
+        char buffer[30000] = {0};
+        ssize_t valread = read(newsocket, buffer, sizeof(buffer) - 1);
+        if (valread < 0) {
+            perror("Error reading from socket");
             exit(EXIT_FAILURE);
         }
-        
-        if(pid == 0){
-            int valread=read(newsocket,buffer,300000);
-            std::cout<<buffer<<std::endl;
 
-            printf("\n buffer message: %s \n ", buffer);
-            char *parse_string_method = parse_method(buffer, " ");  //Try to get the path which the client ask for
-            printf("Client method: %s\n", parse_string_method);
+        printf("\n buffer message: %s \n", buffer);
+        char *parse_string_method = parse_method(buffer, " ");
+        printf("Client method: %s\n", parse_string_method);
 
-            //char httpHeader1[800021] = "HTTP/1.1 200 OK\r\n\n";
+        char *parse_string = parse(buffer, " ");
+        printf("Client ask for path: %s\n", parse_string);
 
-            char *parse_string = parse(buffer, " ");  //Try to get the path which the client ask for
-            printf("Client ask for path: %s\n", parse_string);
+        char *copy = strdup(parse_string);
+        if (!copy) {
+            perror("Memory allocation failed");
+            exit(EXIT_FAILURE);
+        }
+        char *parse_ext = parse(copy, ".");
 
-            // std::ostringstream oss;
-            // oss << "HTTP/1.1 200 OK\r\n\n";
-            // oss << "Cache-Control: no-cache, private\r\n";
-            // oss << "Content-Type: text/plain\r\n";
-            // oss << "Content-Length: 12\r\n";
-            // oss << "\r\n";
-            // oss << "Hello World!";
+        char *copy_head = (char *)malloc(strlen(http_header) + 200);
+        if (!copy_head) {
+            perror("Memory allocation failed");
+            free(copy);
+            exit(EXIT_FAILURE);
+        }
+        strcpy(copy_head, http_header);
 
-            // std::string response = oss.str();
-            // int size=response.size()+1;
-            // send(newsocket,response.c_str(),size,0);
-
-            char *copy = (char *)malloc(strlen(parse_string) + 1);
-            strcpy(copy, parse_string);
-            char *parse_ext = parse(copy, ".");  // get the file extension such as JPG, jpg
-
-            char *copy_head = (char *)malloc(strlen(http_header) +200);
-            strcpy(copy_head, http_header);
-
-            if(parse_string_method[0] == 'G' && parse_string_method[1] == 'E' && parse_string_method[2] == 'T'){
-                //https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-                if(strlen(parse_string) <= 1){
+        if (strncmp(parse_string_method, "GET", 3) == 0) {
+            // Handle GET requests
+            // ... (rest of the GET handling code)
+            if(strlen(parse_string) <= 1){
                     //case that the parse_string = "/"  --> Send index.html file
                     //write(new_socket , httpHeader , strlen(httpHeader));
                     char path_head[500] = ".";
-                    strcat(path_head, "/Server/HTML/index.html");
+                    strcat(path_head, "/index.html");
                     strcat(copy_head, "Content-Type: text/html\r\n\r\n");
                     send_message(newsocket, path_head, copy_head);
                 }
-                else if ((parse_ext[0] == 'j' && parse_ext[1] == 'p' && parse_ext[2] == 'g') || (parse_ext[0] == 'J' && parse_ext[1] == 'P' && parse_ext[2] == 'G'))
+               else if ((parse_ext[0] == 'j' && parse_ext[1] == 'p' && parse_ext[2] == 'g') || (parse_ext[0] == 'J' && parse_ext[1] == 'P' && parse_ext[2] == 'G'))
                 {
                     //send image to client
                     char path_head[500] = ".";
@@ -140,31 +140,25 @@ void HDE::TestServer::handleConnection() {
                     printf("Else: %s \n", parse_string);        
                 }
                 printf("\n------------------Server sent----------------------------------------------------\n");
-                respondConnection();
-                return;
-                
-            }
-            else if (parse_string_method[0] == 'P' && parse_string_method[1] == 'O' && parse_string_method[2] == 'S' && parse_string_method[3] == 'T'){
-                char *find_string = (char*)malloc(200);
-                find_string = find_token(buffer, "\r\n", "action");
-                strcat(copy_head, "Content-Type: text/plain \r\n\r\n"); //\r\n\r\n
-                //strcat(copy_head, "Content-Length: 12 \n");
-                strcat(copy_head, "User Action: ");
-                printf("find string: %s \n", find_string);
-                strcat(copy_head, find_string);
-                write(newsocket, copy_head, strlen(copy_head));
-            }
-            free(copy);
-            free(copy_head);
-            respondConnection();
-            return;
-            }  
-            else{
-            printf(">>>>>>>>>>Parent create child with pid: %d <<<<<<<<<", pid);
-            respondConnection();
-            }
-    close(getSocket()->getServer());
-    return ;
+        } else if (strncmp(parse_string_method, "POST", 4) == 0) {
+            // Handle POST requests
+            char *find_string = find_token(buffer, "\r\n", "action");
+            strcat(copy_head, "Content-Type: text/plain\r\n\r\n");
+            strcat(copy_head, "User Action: ");
+            printf("find string: %s \n", find_string);
+            strcat(copy_head, find_string);
+            write(newsocket, copy_head, strlen(copy_head));
+        }
+
+        close(newsocket);
+        free(copy);
+        free(copy_head);
+        exit(EXIT_SUCCESS);  // Exit child process
+    } else {
+        // Parent process
+        printf("Parent created child with pid: %d\n", pid);
+        close(newsocket);
+    }
 }
 
 void HDE::TestServer::respondConnection() {
